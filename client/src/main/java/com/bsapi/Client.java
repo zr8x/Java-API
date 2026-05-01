@@ -1,15 +1,15 @@
+package com.bsapi;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Client {
-    public static void main(String[] args) throws Exception {
-        int[] array = { 2, 8, 1, 6, 9, 1, 5, 2 };
-
+    public int[] SendPostArray(int[] array) throws Exception {
         JSONArray arrayUnordered = new JSONArray().putAll(array);
         JSONObject bodyObject = new JSONObject().put("body", arrayUnordered);
 
@@ -21,8 +21,15 @@ public class Client {
             .build();
         
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        JSONObject responseObject = new JSONObject(response.body());
+        JSONArray responseArray = new JSONArray(responseObject.get("body").toString());
+        
+        int[] intArray = new int[responseArray.length()];
 
-        System.out.println("Status code: " + response.statusCode());
-        System.out.println("Response body: " + response.body());
+        for (int i = 0; i < responseArray.length(); i++) {
+            intArray[i] = responseArray.optInt(i);
+        }
+
+        return intArray;
     }
 }
