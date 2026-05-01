@@ -10,8 +10,7 @@ import org.json.JSONObject;
 
 public class Client {
     public int[] SendPostArray(int[] array) throws Exception {
-        JSONArray arrayUnordered = new JSONArray().putAll(array);
-        JSONObject bodyObject = new JSONObject().put("body", arrayUnordered);
+        JSONObject bodyObject = ArrayToJSON(array);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -24,12 +23,23 @@ public class Client {
         JSONObject responseObject = new JSONObject(response.body());
         JSONArray responseArray = new JSONArray(responseObject.get("body").toString());
         
-        int[] intArray = new int[responseArray.length()];
+        int[] intArray = JSONToArray(responseArray);
 
-        for (int i = 0; i < responseArray.length(); i++) {
-            intArray[i] = responseArray.optInt(i);
+        return intArray;
+    }
+
+    public JSONObject ArrayToJSON(int[] array) {
+        JSONArray jsonArray = new JSONArray().putAll(array);
+        JSONObject jsonObject = new JSONObject().put("body", jsonArray);
+        return jsonObject;
+    }
+
+    public int[] JSONToArray(JSONArray jsonArray) {
+        int[] intArray = new int[jsonArray.length()];
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            intArray[i] = jsonArray.optInt(i);
         }
-
         return intArray;
     }
 }
