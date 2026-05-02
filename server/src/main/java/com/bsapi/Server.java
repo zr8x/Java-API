@@ -1,15 +1,17 @@
-
-import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpExchange;
+package com.bsapi;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
 public class Server {
 
@@ -39,7 +41,7 @@ public class Server {
         }
     }
 
-    static int[] bubbleSort(int[] arr) {
+    public static int[] bubbleSort(int[] arr) {
         int lastSwap = arr.length - 1;
         for (int i = 1; i < arr.length; i++) {
             boolean is_sorted = true;

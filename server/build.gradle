@@ -18,7 +18,7 @@ sourceSets {
     }
     test {
         java {
-            srcDirs = ['test']  // point this to wherever your test files are
+            srcDirs = ['src']  // point this to wherever your test files are
         }
     }
 }
